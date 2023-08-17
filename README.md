@@ -1,6 +1,6 @@
 # Workout Tracking App (In Progress)
 A workout tracking app built using React Native, allowing users to create and track their own workouts with custom exercises and exercises fetched from an external API. The app is a work in progress and will provide features such as local storage, exercise customization, and more.
-<img src="https://github.com/favicon.ico](https://github.com/erik-923/WorkoutApp/assets/131719059/cad57df9-b698-423a-8ab9-25f8a57da059" width="48" height='auto'>
+![image](https://github.com/favicon.ico](https://github.com/erik-923/WorkoutApp/assets/131719059/cad57df9-b698-423a-8ab9-25f8a57da059)
 # Features (Planned and In Progress)
 * Create and customize workouts
 * Add custom exercises to workouts
