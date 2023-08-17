@@ -10,9 +10,9 @@ A workout tracking app built using React Native, allowing users to create and tr
 * Track exercise sets, reps, and weights
 * Visualize workout history and progress
 # Technologies Used
-React Native framework
-AsyncStorage for local storage
-Api-ninjas exercise api
+* React Native framework
+* AsyncStorage for local storage
+* Api-ninjas exercise api
 # Usage
 * Create your own workouts with custom exercises or use exercises from the external API.
 * Track sets, reps, and weights for each exercise.
