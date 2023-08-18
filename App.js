@@ -1,77 +1,77 @@
-import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, StatusBar, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+import {React, useState} from 'react';
+import { StyleSheet, SafeAreaView, StatusBar, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome5, Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { globalVars } from './styles/globalStyles';
-import WorkoutScreen from './screens/WorkoutScreen.jsx'
-import ExerciseScreen from './screens/ExerciseScreen'
-import InsightScreen from './screens/InsightScreen'
-import SettingsScreen from './screens/SettingsScreen.jsx'
+import { v4 as uuid } from 'uuid';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CreateWorkoutForm from './components/CreateWorkoutForm';
+import BottomTabs from './components/BottomTabs.jsx';
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [workouts, setWorkouts] = useState({
+    myWorkouts: [
+    { name: "Example Workout 1", lastCompleted: new Date().getTime()},
+    { name: "Example Workout 2", lastCompleted: new Date().getTime()},
+    { name: "Example Workout 3", lastCompleted: new Date().getTime()},
+  ]
+})
+  const [exercises, setExercises] = useState({
+    myExercises: [
+    {
+      name: 'Bench Press',
+      id: uuid(),
+      muscleGroups: ['Chest', 'Shoulder', 'Tricep'],
+      defaultSets: [
+        {reps: 8, weight: 0},
+        {reps: 8, weight: 0},
+        {reps: 8, weight: 0}
+      ],
+      notes: ''
+    }
+  ]
+})
+  const [history, setHistory] = useState({
+    myHistory: []
+  })
+
+  const createWorkout = () => {
+    const newWorkout = {
+      name: '',
+      id: uuid(),
+      exercises: []
+    }
+
+    setWorkouts(prevWorkouts => [...prevWorkouts, newWorkout]);
+
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView style={{flex: 1}}>
         <StatusBar barStyle="light-content" />
         <NavigationContainer>
-          <Tab.Navigator
-          screenOptions={{
-            tabBarActiveTintColor: globalVars.highlightColor,
-            tabBarInactiveColor: globalVars.primaryText,
-            tabBarStyle: {
-              height: 80,
-              backgroundColor: globalVars.secondaryBackground,
-              paddingBottom: 15,
-              borderTopColor: globalVars.accentColor
-            },
-          }}
-          >
-            <Tab.Screen 
-              options={{
-                tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="clipboard-clock-outline" size={size} color={color} />),
-                headerTintColor: globalVars.primaryText,
-                headerStyle: {
-                  backgroundColor: globalVars.background
-                }
-              }} 
-              name="Workouts" 
-              component={WorkoutScreen} 
-              />
-            <Tab.Screen 
-              options={{
-                tabBarIcon: ({ color, size }) => (<FontAwesome5 name="dumbbell" size={size} color={color} />),
-                headerTintColor: globalVars.primaryText,
-                headerStyle: {
-                  backgroundColor: globalVars.background
-                }
-              }} 
-              name="Exercises" 
-              component={ExerciseScreen} 
-              />
-            <Tab.Screen 
-              options={{
-                tabBarIcon: ({ color, size }) => (<Entypo name="line-graph" size={size} color={color} />)
+          <Stack.Navigator>
+            <Stack.Screen 
+              name="Tabs" 
+              component={BottomTabs} 
+              options={{ headerShown: false }} 
+              initialParams={{ 
+                workouts: workouts,
+                exercises: exercises,
+                history: history
               }}
-              name="Insights" 
-              component={InsightScreen} 
               />
-            <Tab.Screen 
-              options={{
-                tabBarIcon: ({ color, size }) => (<Feather name="settings" size={size} color={color} />)
-              }}
-              name="Settings" 
-              component={SettingsScreen} 
-              />
-          </Tab.Navigator>
+            <Stack.Screen name="CreateWorkoutForm" component={CreateWorkoutForm} />
+          </Stack.Navigator>
         </NavigationContainer>
       </KeyboardAvoidingView>
     </SafeAreaView>
     
   );
 };
+
 
 const styles = StyleSheet.create({
   safeArea: {

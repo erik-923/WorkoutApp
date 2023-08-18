@@ -2,23 +2,16 @@ import {React, useState} from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { globalStyles, globalVars } from '../styles/globalStyles';
+import SearchBar from '../components/SearchBar.jsx';
 import AddButton from '../components/AddButton.jsx';
 
-export default function() {
-    [exercises, setExercises] = useState(
-        [
-            {
-                name: 'Dumbell Row',
-                sets: 4,
-                
-            }
-        ]
-    )
-
+export default function({ route }) {
+    const exercises = route.params.exercises;
+    
     return (
         <ScrollView style={globalStyles.scrollContainer}>
             <View style={styles.headerContainer}>
-                <TextInput style={styles.searchBar}/>
+                <SearchBar />
             </View>
             <View style={styles.container}>
                 <AddButton text="Exercise" />
@@ -46,9 +39,6 @@ export default function() {
 const styles = StyleSheet.create({
     headerContainer: {
         padding: 15
-    },
-    headerTitle: {
-        color: globalVars.primaryText
     },
     optionsIcon: {
         color: globalVars.primaryText

@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 
 const globalStyles = StyleSheet.create({
     scrollContainer: {
-      backgroundColor: '#202124'
+      backgroundColor: '#202124',
+      flex: 1
     },
     shadow: {
         shadowColor: 'black',
@@ -22,6 +23,7 @@ const globalVars = {
     highlightColor: '#663399',
     secondaryBackground: '#292a2b',
     borderRadius: 15,
+    black: '#120e1a'
 
 };
   

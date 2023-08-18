@@ -4,39 +4,31 @@ import dateFormat from '../functions/dateFormat.js';
 import { Entypo } from '@expo/vector-icons';
 import { globalVars, globalStyles } from '../styles/globalStyles.js';
 import AddButton from '../components/AddButton.jsx';
+import SearchBar from '../components/SearchBar.jsx';
+import { useNavigation } from '@react-navigation/native';
 
-export default function() {
-    [workouts, setWorkouts] = useState(
-        [{
-            name: "Arms and Shoulders",
-            lastCompleted: new Date(2023, 8, 14, 11, 37)
-        },
-        {
-            name: "Chest and Back",
-            lastCompleted: new Date(2023, 8, 13, 14, 8)
-        },
-        {
-            name: "Legs",
-            lastCompleted: new Date(2023, 7, 29, 18, 34)
-        }
-        ]
-    )
+export default function({ route }) {
+    const workouts = route.params.workouts
+    const navigation = useNavigation();
 
+    const addWorkoutNavigation = () => {
+        navigation.navigate('CreateWorkoutForm');
+    };
 
     return (
         <ScrollView style={globalStyles.scrollContainer}>
             <View style={styles.headerContainer}>
-                <Text style={styles.headerTitle}>Press on a workout to begin</Text>
+                <SearchBar />
             </View>
             <View style={styles.workoutContainer}>
-                <AddButton text="Workout"/>
+                <AddButton text="Workout"pressHandler={addWorkoutNavigation}/>
                 {
                 workouts.map((workout, index) => (
                     <View key={index} style={[styles.workoutItem, globalStyles.shadow]}>
                         <View style={{flex: 1}}>
                             <TouchableOpacity>
                                 <Text style={styles.nameText}>{workout.name}</Text>
-                                <Text style={styles.timeText}>Last Workout: {dateFormat(workout.lastCompleted)}</Text>
+                                <Text style={styles.timeText}>{Date(workout.lastCompleted)}</Text>
                             </TouchableOpacity>
                         </View>
                         <View>
@@ -56,6 +48,7 @@ const styles = StyleSheet.create({
     workoutContainer: {
         backgroundColor: globalVars.background,
         paddingHorizontal: 18,
+        flex: 1
     },
     workoutItem: {
         flexDirection: 'row',
